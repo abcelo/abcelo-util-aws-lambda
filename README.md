@@ -6,7 +6,10 @@ code, we offer `abcelo-util-aws-lamba`'s `LambdaAppender` class. Please see
 the example usage and `logback.xml` file below.
 
 
-### Example Lambda Handler
+# Example Usage
+
+
+## Example Lambda Handler
 
 ```scala
 import com.amazonaws.services.lambda.runtime.Context
@@ -19,7 +22,6 @@ class TestLambdaHandler {
     LambdaAppender.setContext(context)
     log.info("Hi!")
   }
-
 }
 
 object TestLambdaHandler {
@@ -28,7 +30,7 @@ object TestLambdaHandler {
 ```
 
 
-### Example `logback.xml`
+## Example `logback.xml`
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -46,4 +48,9 @@ object TestLambdaHandler {
   </root>
 </configuration>
 ```
+
+
+# License
+
+This project is licensed under the terms of the Apache License 2.0.
 

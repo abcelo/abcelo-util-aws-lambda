@@ -1,6 +1,6 @@
 # abcelo-util-aws-lambda
 
-For those wanting to build AWS Lambda Functions that use libraries that log
+For those building AWS Lambda Functions with libraries that log
 using SLF4J, or who want to use SLF4J and conventional logging in their own
 code, we offer `abcelo-util-aws-lamba`'s `LambdaAppender` class. Please see
 the example usage and `logback.xml` file below.

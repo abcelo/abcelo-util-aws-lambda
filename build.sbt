@@ -35,6 +35,8 @@ libraryDependencies ++= Seq(
 .map(_.exclude("log4j", "log4j"))
 .map(_.exclude("org.slf4j", "slf4j-log4j12"))
 
+dependencyUpdatesExclusions := moduleFilter(organization = "org.scala-lang")
+
 scalariformSettings
 
 EclipseKeys.withSource := true

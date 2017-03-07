@@ -31,10 +31,8 @@ class LambdaAppender extends AppenderBase[ILoggingEvent] {
   def append(event: ILoggingEvent): Unit = {
     (LambdaAppender.getContext, encoder) match {
       case (Some(ctx), Some(enc)) => {
-        val out = new ByteArrayOutputStream
-        enc.init(out)
-        enc.doEncode(event)
-        val str = out.toString("UTF-8")
+        val bytes = enc.encode(event)
+        val str = new String(bytes, "UTF8")
         ctx.getLogger.log(str)
       }
       case _ => // no-op

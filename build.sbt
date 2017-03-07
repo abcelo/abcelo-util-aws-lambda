@@ -18,7 +18,7 @@ initialize := {
 
 val awsLambdaCoreVersion = "1.1.0"
 val awsSdkVersion = "1.11.78"
-val logbackVersion = "1.1.8"
+val logbackVersion = "1.2.1"
 val scalaTestVersion = "3.0.1"
 val slf4jVersion = "1.7.22"
 

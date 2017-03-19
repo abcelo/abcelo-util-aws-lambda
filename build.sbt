@@ -18,9 +18,9 @@ initialize := {
 
 val awsLambdaCoreVersion = "1.1.0"
 val awsSdkVersion = "1.11.78"
-val logbackVersion = "1.2.1"
+val logbackVersion = "1.2.2"
 val scalaTestVersion = "3.0.1"
-val slf4jVersion = "1.7.22"
+val slf4jVersion = "1.7.25"
 
 libraryDependencies ++= Seq(
   "com.amazonaws" % "aws-lambda-java-core" % awsLambdaCoreVersion,

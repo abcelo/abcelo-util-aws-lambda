@@ -15,29 +15,16 @@
  */
 package com.abcelo.util.aws.lambda
 
-import ch.qos.logback.core.AppenderBase
+import java.io.OutputStream
+
 import com.amazonaws.services.lambda.runtime.Context
+
 import ch.qos.logback.classic.spi.ILoggingEvent
-import ch.qos.logback.core.encoder.Encoder
-import java.io.ByteArrayOutputStream
+import ch.qos.logback.core.OutputStreamAppender
+import ch.qos.logback.classic.LoggerContext
 
-class LambdaAppender extends AppenderBase[ILoggingEvent] {
-
-  private var encoder: Option[Encoder[ILoggingEvent]] = None
-
-  def setEncoder(e: Encoder[ILoggingEvent]): Unit = synchronized { encoder = Some(e) }
-  def getEncoder(): Encoder[ILoggingEvent] = synchronized { encoder.getOrElse(null) }
-
-  def append(event: ILoggingEvent): Unit = {
-    (LambdaAppender.getContext, encoder) match {
-      case (Some(ctx), Some(enc)) => {
-        val bytes = enc.encode(event)
-        val str = new String(bytes, "UTF8")
-        ctx.getLogger.log(str)
-      }
-      case _ => // no-op
-    }
-  }
+class LambdaAppender extends OutputStreamAppender[ILoggingEvent] {
+  setOutputStream(LambdaAppender.LambdaAppenderOutputStream)
 }
 
 object LambdaAppender {
@@ -45,4 +32,17 @@ object LambdaAppender {
 
   def setContext(c: Context): Unit = synchronized { context = Some(c) }
   def getContext: Option[Context] = synchronized { context }
+
+  object LambdaAppenderOutputStream extends OutputStream {
+    override def write(i: Int): Unit = {
+      throw new UnsupportedOperationException("This OutputStream expects complete chunks of loggable bytes at a time")
+    }
+    override def write(bytes: Array[Byte]): Unit = {
+      getContext match {
+        case Some(ctx) => ctx.getLogger.log(new String(bytes, "UTF8"))
+        case None => // no-op
+      }
+    }
+  }
+
 }
